@@ -1,0 +1,39 @@
+{
+  "Version": "2008-10-17",
+  "Id": "__default_policy_ID",
+  "Statement": [
+    {
+      "Sid": "__default_statement_ID",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "*"
+      },
+      "Action": [
+        "SNS:GetTopicAttributes",
+        "SNS:SetTopicAttributes",
+        "SNS:AddPermission",
+        "SNS:RemovePermission",
+        "SNS:DeleteTopic",
+        "SNS:Subscribe",
+        "SNS:ListSubscriptionsByTopic",
+        "SNS:Publish",
+        "SNS:Receive"
+      ],
+      "Resource": "THIS_SNS_TOPIC_ARN should be populated by default",
+      "Condition": {
+        "StringEquals": {
+          "AWS:SourceOwner": "237796709103"
+        }
+      }
+    },
+    {
+      "Sid": "TrustCWEToPublishEventsToMyTopic",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "events.amazonaws.com"
+      },
+      "Action": "sns:Publish",
+      "Resource": "STOP_SERVER_LAMBDA_ARN"
+    }
+  ]
+}
