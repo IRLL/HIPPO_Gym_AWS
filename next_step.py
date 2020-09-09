@@ -12,6 +12,8 @@ HEADERS = {
 
 def lambda_handler(event, context):
     print(event)
+    host = event.get('headers').get('Host')
+    print('Host: ', host)
     qs = event.get('queryStringParameters', dict())
     UserId = None
     projectId = qs.get('projectId', None) 
@@ -28,7 +30,7 @@ def lambda_handler(event, context):
         return {
             'statusCode': 200,
             'headers': HEADERS,
-            'body': json.dumps(content)
+            'body': json.dumps({'page': content})
         }
     return {
         'statusCode': 400,
