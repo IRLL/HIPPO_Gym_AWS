@@ -30,7 +30,7 @@ def lambda_handler(event, context):
         return {
             'statusCode': 200,
             'headers': HEADERS,
-            'body': json.dumps({'page': content})
+            'body': json.dumps({'page': content, 'css': None})
         }
     return {
         'statusCode': 400,
