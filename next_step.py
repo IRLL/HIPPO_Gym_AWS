@@ -2,6 +2,7 @@ import json, boto3, os
 from datetime import datetime, timezone
 
 S3 = boto3.resource('s3')
+S3CLIENT = boto3.client('s3')
 SNS = boto3.client('sns')
 ROUTE53 = boto3.client('route53')
 HEADERS = {
@@ -28,7 +29,7 @@ def lambda_handler(event, context):
         return {
             'statusCode': 200,
             'headers': HEADERS,
-            'body': json.dumps(content)
+            'body': json.dumps({'page': content, 'css': None})
         }
     return {
         'statusCode': 400,
@@ -50,13 +51,32 @@ def get_content(projectId, userId, stepFile, project):
         decrement_user_step_count(userId, projectId, project)
         return "wait"
     bucket = project.get('bucket') or os.environ['BUCKET']
-    filename = f'{projectId}/{stepFile}'
+    filename = check_groups(bucket, projectId, userId, stepFile)
     print(filename)
     try:
         content = S3.Object(bucket, filename).get()['Body'].read().decode('utf-8')
         return content
     except: 
         return 'Content Not Found'
+
+def check_groups(bucket, projectId, userId, stepfile):
+    files = S3CLIENT.list_objects(Bucket=bucket, Prefix=projectId).get('Contents')
+    steps = []
+    for file in files:
+        filename = file.get('Key')
+        if 'html' in filename:
+            steps.append(filename)
+    stepfile = stepfile.replace('.html','')
+    this_step = []
+    for step in steps:
+        if stepfile in step:
+            this_step.append(step)
+    if len(this_step) > 1:
+        group = bucketer(userId, len(this_step))
+        for step in this_step:
+            if f'-{group}.html' in step:
+                return step
+    return f'{projectId}/{stepfile}.html'
 
 def check_step_events(project, step):
     topicArn = None
@@ -132,3 +152,40 @@ def check_dns(userId):
     if response['ResourceRecordSets'][0]['Name'] != dnsEntry:
         return False
     return True
+
+def bucketer(UUID, n):
+  # Get the number of requisite hex characters for the UUID
+  hex_chars = UUID[-num_chars(n):]
+
+  # sum last largest_prime digits
+  sum = 0
+  for char in hex_chars:
+    sum += int(char, 16)
+
+  return sum % n
+
+def num_chars(n):
+  # Determine all prime factors
+  i = 2
+  factors = []
+  while i * i <= n:
+      if n % i:
+          i += 1
+      else:
+          n //= i
+          factors.append(i)
+  if n > 1:
+      factors.append(n)
+  
+  # Get unique factors
+  factors = list(set(factors))
+
+  # Remove 2
+  factors.pop(0)
+
+  product = 1
+
+  for factor in factors:
+    product *= factor
+
+  return product
