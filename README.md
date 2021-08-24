@@ -1,4 +1,29 @@
-# HIPPO Gym AWS Lambda Functions
+# HIPPO Gym 
+##### Human Input Parsing Platform for Openai Gym
+[hippogym.irll.net](https://irll.net)
+
+Written by [Nick Nissen](https://nicknissen.com), Payas Singh, Nadeen Mohammed, and Yuan Wang
+Supervised by [Matt Taylor](https://drmatttaylor.net) and Neda Navi
+For the Intelligent Robot Learning Laboratory [(IRLL)](https://irll.ca) at the University of Alberta [(UofA)](https://ualberta.ca)
+Supported by the Alberta Machine Intelligence Institure [(AMII)](https://amii.ca)
+
+For questions or support contact us at [hippogym.irll@gmail.com](mailto:hippogym.irll@gmail.com)
+
+The HIPPO Gym Project contains 4 repositories:
+
+1. The main framework: [HIPPO_Gym](https://github.com/IRLL/HIPPO_Gym)
+
+2. The AWS code and instructions: [HIPPO_Gym_AWS](https://github.com/IRLL/HIPPO_Gym_AWS)
+
+3. The React Front End: [HIPPO_Gym_React_FrontEnd](https://github.com/IRLL/HIPPO_Gym_FrontEnd_React)
+
+4. The SSL Certificate Getter: [HIPPO_Gym_SSL](https://github.com/IRLL/HIPPO Gym_SSL)
+
+For members of the IRLL or anyone whose organization has already setup the AWS infrastructure, the only repo required is #1.
+
+Anyone is welcome to use the front-end deployed to [irll.net](https://irll.net)
+
+## AWS Lambda Functions
 
 Python3.8 recommended
 

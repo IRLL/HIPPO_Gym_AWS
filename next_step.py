@@ -13,6 +13,8 @@ HEADERS = {
 
 def lambda_handler(event, context):
     print(event)
+    host = event.get('headers').get('Host')
+    print('Host: ', host)
     qs = event.get('queryStringParameters', dict())
     UserId = None
     projectId = qs.get('projectId', None) 
