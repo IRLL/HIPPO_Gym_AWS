@@ -1,6 +1,6 @@
 # AWS Setup instructions for HIPPO Gym
 
-## Ifrastructure Checklist:
+## Infrastructure Checklist:
 - [ ] Lambda Functions
   - [ ] next_step.py
   - [ ] start_server.py
@@ -36,7 +36,7 @@
 
 ## Setup Instructions:
 
-Note on regions: Choose a region that's most appropriate for your use case and setup all reqion specific services in that region. Write it down, there are lots of regions and it is annoying when you can't find your infrastructure.
+Note on regions: Choose a region that's most appropriate for your use case and setup all region specific services in that region. Write it down, there are lots of regions and it is annoying when you can't find your infrastructure.
 
 For the purposes if these instructions, PROJECT_REGION represents the specific region that has been chosen for the project. If a more specific region is listed then it must be used.
 
